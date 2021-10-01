@@ -2,16 +2,17 @@ package com.example.core.Model;
 
 public class Candidato {
     private String id;
-    private String Nome;
-    private Integer NumeroCandidato;
+    private String nome;
+    private Integer numeroCandidato;
 
     public Candidato(){}
 
     public Candidato(String id, String nome, Integer numeroCandidato) {
         this.id = id;
-        Nome = nome;
-        NumeroCandidato = numeroCandidato;
+        this.nome = nome;
+        this.numeroCandidato = numeroCandidato;
     }
+
 
     public String getId() {
         return id;
@@ -22,18 +23,18 @@ public class Candidato {
     }
 
     public String getNome() {
-        return Nome;
+        return nome;
     }
 
     public void setNome(String nome) {
-        Nome = nome;
+        this.nome = nome;
     }
 
     public Integer getNumeroCandidato() {
-        return NumeroCandidato;
+        return numeroCandidato;
     }
 
     public void setNumeroCandidato(Integer numeroCandidato) {
-        NumeroCandidato = numeroCandidato;
+        this.numeroCandidato = numeroCandidato;
     }
 }

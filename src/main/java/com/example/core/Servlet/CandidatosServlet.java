@@ -11,43 +11,49 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.UUID;
 
 
-@WebServlet(name = "CandidatoServlet", value = "/candidato")
-public class CandidatoServlet extends HttpServlet {
-
+@WebServlet( value = "/candidatos")
+public class CandidatosServlet extends HttpServlet {
+    private CandidatosListCreator candidatosListCreator = new CandidatosListCreator();
     private List<Candidato> candidatos = new ArrayList<>();
 
-    private CandidatosListCreator candidatosListCreator = new CandidatosListCreator();
-
+    // LISTAGEM CANDIDATOS
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("doGet");
+        HttpSession session = request.getSession();
         PrintWriter out = response.getWriter();
-        out.println(candidatosListCreator.getTableHtml(candidatos));
+
+        if (session.isNew()) {
+            out.println(candidatosListCreator.getTableHtml(candidatos));
+        }
+        else {
+            candidatos = (List<Candidato>) session.getAttribute("candidatos");
+            out.println(candidatosListCreator.getTableHtml(candidatos));
+        }
     }
 
+    // SALVAR CANDIDATO
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session=request.getSession();
-        if (Objects.nonNull(session.getAttribute("candidatos"))){
-            candidatos.addAll((List<Candidato>)session.getAttribute("candidatos"));
-        }
         String id = request.getParameter("id");
         String nome = request.getParameter("nome");
         String numero = request.getParameter("numero");
 
-        System.out.println("doPost: "+ id);
+        System.out.println("doPost: new candidato");
 
         if (Objects.isNull(id)){
-            id = UUID.randomUUID().toString();
-            Candidato candidato = new Candidato(id,nome,Integer.valueOf(numero));
+            Candidato candidato = new Candidato(UUID.randomUUID().toString(),nome,Integer.valueOf(numero));
             candidatos.add(candidato);
             session.setAttribute("candidatos",candidatos);
         }
         else {
+            System.out.println("doPost: "+ id);
             for(Candidato candidato : candidatos){
                 if (candidato.getId().equals(id)){
                     candidato.setNome(nome);
@@ -55,24 +61,6 @@ public class CandidatoServlet extends HttpServlet {
                 }
             }
         }
-        PrintWriter out = response.getWriter();
-        out.println(candidatosListCreator.getTableHtml(candidatos));
-    }
-
-    @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPut(req, resp);
-    }
-
-    @Override
-    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        PrintWriter out = response.getWriter();
-        String id = request.getParameter("id");
-
-        System.out.println("doDelete: "+ id);
-
-        candidatos = candidatos.stream().filter(candidato -> !candidato.getId().equals(id)).collect(Collectors.toList());
-
-        out.println(candidatosListCreator.getTableHtml(candidatos));
+        response.sendRedirect(request.getRequestURI());
     }
 }

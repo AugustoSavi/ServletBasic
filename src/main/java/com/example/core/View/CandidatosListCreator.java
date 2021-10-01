@@ -33,11 +33,11 @@ public class CandidatosListCreator {
 
         String dados = "";
         for (Candidato candidato : candidatos) {
-            dados =  "<tr>" +
+            dados +=  "<tr>" +
                         "<td>" + candidato.getId() + "</td>" +
                         "<td>" + candidato.getNome() + "</td>" +
                         "<td>" + candidato.getNumeroCandidato() + "</td>" +
-                        "<td><a onclick=_delete(\""+ candidato.getId() +"\") class=\"fas fa-pencil-alt\"></a></td>" +
+                        "<td><a onclick=_delete(\""+ candidato.getId() +"\") class=\"fas fa-trash-alt\"></a></td>" +
                     "</tr>" ;
         }
         page += dados;
@@ -50,14 +50,15 @@ public class CandidatosListCreator {
                 "         console.log(id); \n" +
                 "        var HEADERS = new Headers();\n" +
                 "        HEADERS.append('id', id);\n" +
-                "        var CONFIG = { method: 'DELETE',\n" +
+                "        var CONFIG = { method: 'GET',\n" +
                 "            headers: HEADERS,\n" +
                 "            mode: 'cors'};\n" +
                 "\n" +
-                "        fetch('candidato?'+ new URLSearchParams({id}),CONFIG)" +
+                "        fetch('candidato-remove?'+ new URLSearchParams({id}),CONFIG)" +
                 "       .then(function(response) {" +
                 "       if (response.ok) {" +
-                "       console.log(\"request ok\")} " +
+                "       console.log(\"request ok\"); \n" +
+                "       window.location.reload(); \n }" +
                 "       else {console.log(\"error: \" + response);}})" +
                 "    }\n" +
                 "</script>";

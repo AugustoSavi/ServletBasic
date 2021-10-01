@@ -27,7 +27,7 @@
                 <td>Mark</td>
                 <td>Otto</td>
                 <td>@mdo</td>
-                <td><a href="/core_war_exploded/candidato-delete/?id=123123"><i class="fas fa-pencil-alt"></i></a></td>
+                <td><a onclick=_delete("33bef142-b8f7-4616-9439-abaafc7b97df") class="fas fa-pencil-alt"></a></td>
                 <td><i class="fas fa-trash-alt"></i></td>
             </tr>
             <tr>
@@ -44,4 +44,24 @@
         </table>
     </div>
 </body>
+<script>
+    function _delete(id){
+        console.log(id)
+        var HEADERS = new Headers();
+        HEADERS.append('id', id);
+        var CONFIG = { method: 'DELETE',
+            headers: HEADERS,
+            mode: 'cors'};
+
+        fetch('candidato?'+ new URLSearchParams({
+            id
+        }),CONFIG).then(function(response) {
+            if (response.ok) {
+                console.log("request ok")
+            } else {
+                console.log("error: " + response);
+            }
+        })
+    }
+</script>
 </html>

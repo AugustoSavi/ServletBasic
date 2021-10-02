@@ -1,4 +1,4 @@
-package com.example.core.View;
+package com.example.core.View.CandidatosViews;
 
 import com.example.core.Model.Candidato;
 
@@ -40,7 +40,7 @@ public class CandidatoHTMLCreator {
                 "                               <label for=\"floatingNumero\">Numero candidato</label>" +
                 "                          </div>" +
                 "                          <div class=\"d-grid\">" +
-                "                               <button class=\"btn btn-primary btn-login text-uppercase fw-bold\" type=\"submit\">Cadastrar </button>" +
+                "                               <button class=\"btn btn-primary btn-login text-uppercase fw-bold\" type=\"submit\">Salvar</button>" +
                 "                           </div>" +
                 "                       </form>" +
                 "                   </div>" +

@@ -1,8 +1,8 @@
-package com.example.core.Servlet.candidatosServlet;
+package com.example.core.Servlet.votosServlet;
 
 import com.example.core.Model.Candidato;
-import com.example.core.View.CandidatosViews.CandidatoHTMLCreator;
-
+import com.example.core.Model.Voto;
+import com.example.core.View.VotosViews.VotoHTMLCreator;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,24 +15,26 @@ import java.util.List;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
-@WebServlet( value = "/candidato-edit")
-public class CandidatoEditServlet extends HttpServlet {
+@WebServlet( value = "/voto-edit")
+public class VotoEditServlet extends HttpServlet {
 
-    private CandidatoHTMLCreator candidatoHTMLCreator = new CandidatoHTMLCreator();
+    private VotoHTMLCreator votoHTMLCreator = new VotoHTMLCreator();
     private static Pattern pattern = Pattern.compile("[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$");
 
-    // EDIT CANDIDATO
+    // EDIT VOTO
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         PrintWriter out = response.getWriter();
         String id = String.valueOf(request.getParameter("id"));
-        Candidato candidato = new Candidato();
+        Voto voto = new Voto();
 
         List<Candidato> candidatos = (List<Candidato>)session.getAttribute("candidatos");
-        if(pattern.matcher(id).matches() && Objects.nonNull(candidatos)) {
-            candidato = candidatos.stream().filter(cand -> cand.getId().equals(id)).findFirst().orElse(null);
+        List<Voto> votosSession = (List<Voto>) session.getAttribute("votos");
+
+        if(pattern.matcher(id).matches() && Objects.nonNull(votosSession)) {
+            voto = votosSession.stream().filter(vot -> vot.getId().equals(id)).findFirst().orElse(null);
         }
-        out.println(candidatoHTMLCreator.getPageHtml(candidato));
+        out.println(votoHTMLCreator.getPageHtml(voto,candidatos));
     }
 }

@@ -1,8 +1,7 @@
 package com.example.core.Servlet.votosServlet;
 
-import com.example.core.Model.Candidato;
 import com.example.core.Model.Voto;
-import com.example.core.View.VotosHTMLCreator;
+import com.example.core.View.VotosViews.VotosHTMLCreator;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;

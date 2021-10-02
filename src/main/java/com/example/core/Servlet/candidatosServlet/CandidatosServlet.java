@@ -1,7 +1,7 @@
 package com.example.core.Servlet.candidatosServlet;
 
 import com.example.core.Model.Candidato;
-import com.example.core.View.CandidatosHTMLCreator;
+import com.example.core.View.CandidatosViews.CandidatosHTMLCreator;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

@@ -1,4 +1,4 @@
-package com.example.core.View;
+package com.example.core.View.VotosViews;
 
 import com.example.core.Model.Voto;
 
@@ -37,12 +37,17 @@ public class VotosHTMLCreator {
                     "<td>" + voto.getId() + "</td>" +
                     "<td>" + voto.getCandidato().getNome() + "</td>" +
                     "<td>" + voto.getCandidato().getNumeroCandidato() + "</td>" +
-                    "<td><a href=candidato-edit?id="+ voto.getCandidato().getId() +" class=\"fas fa-pencil-alt\"></a></td>" +
+                    "<td><a href=voto-edit?id="+ voto.getId() +" class=\"fas fa-pencil-alt\"></a></td>" +
                     "<td><a onclick=_delete(\""+ voto.getCandidato().getId() +"\") class=\"fas fa-trash-alt\"></a></td>" +
                     "</tr>" ;
         }
         page += dados;
         page += "</tbody>";
+        page += " <tfoot>\n" +
+                "                <tr>\n" +
+                "                  <td>Total registros: "+ votos.size() +"</td>\n" +
+                "                </tr>\n" +
+                "            </tfoot>";
         page += "</table>";
         page += "</div>";
         page += "</body>";
@@ -55,7 +60,7 @@ public class VotosHTMLCreator {
                 "            headers: HEADERS,\n" +
                 "            mode: 'cors'};\n" +
                 "\n" +
-                "        fetch('candidato-remove?'+ new URLSearchParams({id}),CONFIG)" +
+                "        fetch('voto-remove?'+ new URLSearchParams({id}),CONFIG)" +
                 "       .then(function(response) {" +
                 "       if (response.ok) {" +
                 "       console.log(\"request ok\"); \n" +

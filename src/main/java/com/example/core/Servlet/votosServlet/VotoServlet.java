@@ -2,7 +2,7 @@ package com.example.core.Servlet.votosServlet;
 
 import com.example.core.Model.Candidato;
 import com.example.core.Model.Voto;
-import com.example.core.View.VotoHTMLCreator;
+import com.example.core.View.VotosViews.VotoHTMLCreator;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -34,6 +34,9 @@ public class VotoServlet extends HttpServlet {
 
         List<Candidato> candidatosSession = (List<Candidato>) session.getAttribute("candidatos");
         this.candidatos = Objects.isNull(candidatosSession) ? this.candidatos : candidatosSession;
+
+        if(candidatos.isEmpty()) response.sendRedirect("candidatos");
+
         out.println(votoHTMLCreator.getPageHtml(new Voto(),candidatos));
     }
 

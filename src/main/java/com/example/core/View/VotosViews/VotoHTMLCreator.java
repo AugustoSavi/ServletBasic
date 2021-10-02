@@ -1,4 +1,4 @@
-package com.example.core.View;
+package com.example.core.View.VotosViews;
 
 import com.example.core.Model.Candidato;
 import com.example.core.Model.Voto;
@@ -38,6 +38,9 @@ public class VotoHTMLCreator {
                 "                            <button class=\"btn btn-primary btn-login text-uppercase fw-bold\"\n" +
                 "                                    type=\"submit\">Votar\n" +
                 "                            </button>\n" +
+                "                            <a href=\"index.html\" class=\"btn btn-secondary btn-login text-uppercase fw-bold mt-10\"\n" +
+                "                                    type=\"submit\">Home\n" +
+                "                            </a>\n" +
                 "                        </div>\n" +
                 "                    </form>\n" +
                 "                </div>\n" +

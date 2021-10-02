@@ -1,4 +1,4 @@
-package com.example.core.View;
+package com.example.core.View.CandidatosViews;
 
 import com.example.core.Model.Candidato;
 
@@ -16,6 +16,7 @@ public class CandidatosHTMLCreator {
                 "<body class=\"container text-align\">" +
                     "<div id=\"button-cadastrar\">" +
                         "<a href=\"candidato-edit\" class=\"btn btn-primary btn-block mt-5\">Cadastrar candidato</a>" +
+                        "<a href=\"index.html\" class=\"btn btn-primary btn-block mt-5 mx-3\">Home</a>" +
                     "</div>" +
 
                 "<div id=\"table-dados\" class=\"mt-3\">" +
@@ -43,6 +44,11 @@ public class CandidatosHTMLCreator {
         }
         page += dados;
         page += "</tbody>";
+        page += " <tfoot>\n" +
+                "                <tr>\n" +
+                "                  <td>Total registros: "+ candidatos.size() +"</td>\n" +
+                "                </tr>\n" +
+                "            </tfoot>";
         page += "</table>";
         page += "</div>";
         page += "</body>";

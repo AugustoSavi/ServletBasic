@@ -2,23 +2,21 @@ package com.example.core.Model;
 
 public class Voto {
 
-    private Integer id;
+    private String id;
     private Candidato candidato;
-    private String nome_autor_voto;
 
     public Voto(){}
 
-    public Voto(Integer id, Candidato candidato, String nome_autor_voto) {
+    public Voto(String id, Candidato candidato) {
         this.id = id;
         this.candidato = candidato;
-        this.nome_autor_voto = nome_autor_voto;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -28,13 +26,5 @@ public class Voto {
 
     public void setCandidato(Candidato candidato) {
         this.candidato = candidato;
-    }
-
-    public String getNome_autor_voto() {
-        return nome_autor_voto;
-    }
-
-    public void setNome_autor_voto(String nome_autor_voto) {
-        this.nome_autor_voto = nome_autor_voto;
     }
 }

@@ -4,7 +4,7 @@ import com.example.core.Model.Candidato;
 
 import java.util.List;
 
-public class CandidatosListCreator {
+public class CandidatosHTMLCreator {
 
     public String getTableHtml(List<Candidato> candidatos){
         String page = "<html>" +
@@ -15,7 +15,7 @@ public class CandidatosListCreator {
                 "</head>" +
                 "<body class=\"container text-align\">" +
                     "<div id=\"button-cadastrar\">" +
-                        "<a href=\"newCandidato.html\" class=\"btn btn-primary btn-block mt-5\">Cadastrar candidato</a>" +
+                        "<a href=\"candidato-edit\" class=\"btn btn-primary btn-block mt-5\">Cadastrar candidato</a>" +
                     "</div>" +
 
                 "<div id=\"table-dados\" class=\"mt-3\">" +
@@ -37,6 +37,7 @@ public class CandidatosListCreator {
                         "<td>" + candidato.getId() + "</td>" +
                         "<td>" + candidato.getNome() + "</td>" +
                         "<td>" + candidato.getNumeroCandidato() + "</td>" +
+                        "<td><a href=candidato-edit?id="+ candidato.getId() +" class=\"fas fa-pencil-alt\"></a></td>" +
                         "<td><a onclick=_delete(\""+ candidato.getId() +"\") class=\"fas fa-trash-alt\"></a></td>" +
                     "</tr>" ;
         }
@@ -46,7 +47,7 @@ public class CandidatosListCreator {
         page += "</div>";
         page += "</body>";
         page +="<script>\n" +
-                "    function _delete(id){\n" +
+                "function _delete(id){\n" +
                 "         console.log(id); \n" +
                 "        var HEADERS = new Headers();\n" +
                 "        HEADERS.append('id', id);\n" +

@@ -1,7 +1,7 @@
-package com.example.core.Servlet;
+package com.example.core.Servlet.candidatosServlet;
 
 import com.example.core.Model.Candidato;
-import com.example.core.View.CandidatosListCreator;
+import com.example.core.View.CandidatosHTMLCreator;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,7 +19,7 @@ import java.util.UUID;
 
 @WebServlet( value = "/candidatos")
 public class CandidatosServlet extends HttpServlet {
-    private CandidatosListCreator candidatosListCreator = new CandidatosListCreator();
+    private CandidatosHTMLCreator candidatosHTMLCreator = new CandidatosHTMLCreator();
     private List<Candidato> candidatos = new ArrayList<>();
 
     // LISTAGEM CANDIDATOS
@@ -29,11 +29,12 @@ public class CandidatosServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         if (session.isNew()) {
-            out.println(candidatosListCreator.getTableHtml(candidatos));
+            out.println(candidatosHTMLCreator.getTableHtml(candidatos));
         }
         else {
-            candidatos = (List<Candidato>) session.getAttribute("candidatos");
-            out.println(candidatosListCreator.getTableHtml(candidatos));
+            List<Candidato> candidatosSession = (List<Candidato>) session.getAttribute("candidatos");
+            this.candidatos = Objects.isNull(candidatosSession) ? this.candidatos : candidatosSession;
+            out.println(candidatosHTMLCreator.getTableHtml(this.candidatos));
         }
     }
 
@@ -45,9 +46,9 @@ public class CandidatosServlet extends HttpServlet {
         String nome = request.getParameter("nome");
         String numero = request.getParameter("numero");
 
-        System.out.println("doPost: new candidato");
 
-        if (Objects.isNull(id)){
+        if (Objects.isNull(id) || id.length() == 0){
+            System.out.println("doPost: new candidato");
             Candidato candidato = new Candidato(UUID.randomUUID().toString(),nome,Integer.valueOf(numero));
             candidatos.add(candidato);
             session.setAttribute("candidatos",candidatos);

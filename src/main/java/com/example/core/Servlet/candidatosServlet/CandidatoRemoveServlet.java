@@ -1,4 +1,4 @@
-package com.example.core.Servlet;
+package com.example.core.Servlet.candidatosServlet;
 
 import com.example.core.Model.Candidato;
 

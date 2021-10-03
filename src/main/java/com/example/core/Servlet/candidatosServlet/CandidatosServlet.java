@@ -17,7 +17,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 
-@WebServlet( value = "/candidatos")
+@WebServlet(value = "/candidatos")
 public class CandidatosServlet extends HttpServlet {
     private CandidatosHTMLCreator candidatosHTMLCreator = new CandidatosHTMLCreator();
     private List<Candidato> candidatos = new ArrayList<>();
@@ -46,22 +46,33 @@ public class CandidatosServlet extends HttpServlet {
         String nome = request.getParameter("nome");
         String numero = request.getParameter("numero");
 
-
-        if (Objects.isNull(id) || id.length() == 0){
-            System.out.println("doPost: new candidato");
-            Candidato candidato = new Candidato(UUID.randomUUID().toString(),nome,Integer.valueOf(numero));
-            candidatos.add(candidato);
-            session.setAttribute("candidatos",candidatos);
-        }
-        else {
-            System.out.println("doPost: "+ id);
-            for(Candidato candidato : candidatos){
-                if (candidato.getId().equals(id)){
-                    candidato.setNome(nome);
-                    candidato.setNumeroCandidato(Integer.valueOf(numero));
+        if (validaDuplicado(nome,numero, response)){
+            response.sendRedirect("candidato-duplicado.html");
+        }else {
+            if (Objects.isNull(id) || id.length() == 0) {
+                System.out.println("doPost: new candidato");
+                Candidato candidato = new Candidato(UUID.randomUUID().toString(), nome, Integer.valueOf(numero));
+                candidatos.add(candidato);
+                session.setAttribute("candidatos", candidatos);
+            } else {
+                System.out.println("doPost: " + id);
+                for (Candidato candidato : candidatos) {
+                    if (candidato.getId().equals(id)) {
+                        candidato.setNome(nome);
+                        candidato.setNumeroCandidato(Integer.valueOf(numero));
+                    }
                 }
             }
+            response.sendRedirect(request.getRequestURI());
         }
-        response.sendRedirect(request.getRequestURI());
+    }
+
+    private boolean validaDuplicado(String nome, String numero, HttpServletResponse response){
+        for (Candidato candidato: candidatos){
+            if (candidato.getNome().equals(nome) && candidato.getNumeroCandidato().equals(Integer.valueOf(numero))){
+                return true;
+            }
+        }
+        return false;
     }
 }

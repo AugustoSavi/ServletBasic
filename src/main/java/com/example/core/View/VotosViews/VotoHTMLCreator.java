@@ -29,7 +29,8 @@ public class VotoHTMLCreator {
                 "                        </div>\n" +
                 "                        <div class=\"form-floating mb-3\">\n" +
                 "                            <select pattern=\"[^a-zA-Z0-9]\" class=\"form-control\" name=\"candidato\" id=\"floatingCandidato\">\n" +
-                                                    generateOption(candidatos) +
+                "                                   <option>Selecione o candidato</option>"+
+                                                    generateOption(voto,candidatos) +
                 "                            </select>\n" +
                 "                            <label for=\"floatingCandidato\">Candidato</label>\n" +
                 "                        </div>\n" +
@@ -56,14 +57,23 @@ public class VotoHTMLCreator {
         return "value=".concat(value);
     }
 
-    private String generateOption(List<Candidato> candidatos){
+    private String generateOption(Voto voto,List<Candidato> candidatos){
         String dados = "";
         for (Candidato candidato : candidatos) {
-            dados +=  "<option value="+candidato.getId()+">"+
+            dados +=  "<option value="+candidato.getId()+" " +selectedCandidato(voto, candidato)+ ">"+
                     candidato.getNumeroCandidato() +
                     " - "+
                     candidato.getNome()+"</option>\n";
         }
         return dados;
+    }
+
+    private String selectedCandidato(Voto voto, Candidato candidato){
+        if (Objects.nonNull(voto.getCandidato())) {
+            if (voto.getCandidato().equals(candidato)) {
+                return "selected";
+            }
+        }
+        return null;
     }
 }

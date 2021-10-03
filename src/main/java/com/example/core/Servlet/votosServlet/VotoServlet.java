@@ -35,7 +35,7 @@ public class VotoServlet extends HttpServlet {
         List<Candidato> candidatosSession = (List<Candidato>) session.getAttribute("candidatos");
         this.candidatos = Objects.isNull(candidatosSession) ? this.candidatos : candidatosSession;
 
-        if(candidatos.isEmpty()) response.sendRedirect("candidatos");
+        if(candidatos.isEmpty()) response.sendRedirect("sem-candidatos.html");
 
         out.println(votoHTMLCreator.getPageHtml(new Voto(),candidatos));
     }

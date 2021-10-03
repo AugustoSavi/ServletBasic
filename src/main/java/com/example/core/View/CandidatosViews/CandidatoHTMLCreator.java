@@ -24,7 +24,15 @@ public class CandidatoHTMLCreator {
                 "                             <label for=\"floatingid\">id</label>" +
                 "                           </div>" +
                 "                           <div class=\"form-floating mb-3\">" +
-                "                               <input type=\"text\" class=\"form-control\" " + formatNome(candidato.getNome()) + " id=\"floatingcandidato\" name=\"nome\" placeholder=\"Nome candidato\" minlength=\"1\" maxlength=\"255\">" +
+                "                               <input type=\"text\" " +
+                "                                       class=\"form-control\" "
+                                                        + formatNome(candidato.getNome()) +
+                                                        " id=\"floatingcandidato\" " +
+                "                                       name=\"nome\" " +
+                "                                       placeholder=\"Nome candidato\" " +
+                "                                       minlength=\"3\" " +
+                "                                       required " +
+                "                                       maxlength=\"255\" >" +
                 "                               <label for=\"floatingcandidato\">Nome candidato</label>" +
                 "                           </div>" +
                 "                           <div class=\"form-floating mb-3\">" +
@@ -34,6 +42,7 @@ public class CandidatoHTMLCreator {
                                                         formatNumeroCandidato(candidato.getNumeroCandidato()) +
                 "                                       name=\"numero\" " +
                 "                                       placeholder=\"Numero\" " +
+                "                                       required"+
                 "                                       pattern=\"[0-9]\" " +
                 "                                       min=\"00001\" " +
                 "                                       max=\"99999\">" +

@@ -39,7 +39,7 @@ public class CandidatosHTMLCreator {
                         "<td>" + candidato.getNome() + "</td>" +
                         "<td>" + candidato.getNumeroCandidato() + "</td>" +
                         "<td><a href=candidato-edit?id="+ candidato.getId() +" class=\"fas fa-pencil-alt\"></a></td>" +
-                        "<td><a onclick=_delete(\""+ candidato.getId() +"\") class=\"fas fa-trash-alt\"></a></td>" +
+                        "<td><a href=candidato-remove?id="+ candidato.getId() +" class=\"fas fa-trash-alt\"></a></td>" +
                     "</tr>" ;
         }
         page += dados;
@@ -52,23 +52,6 @@ public class CandidatosHTMLCreator {
         page += "</table>";
         page += "</div>";
         page += "</body>";
-        page +="<script>\n" +
-                "function _delete(id){\n" +
-                "         console.log(id); \n" +
-                "        var HEADERS = new Headers();\n" +
-                "        HEADERS.append('id', id);\n" +
-                "        var CONFIG = { method: 'GET',\n" +
-                "            headers: HEADERS,\n" +
-                "            mode: 'cors'};\n" +
-                "\n" +
-                "        fetch('candidato-remove?'+ new URLSearchParams({id}),CONFIG)" +
-                "       .then(function(response) {" +
-                "       if (response.ok) {" +
-                "       console.log(\"request ok\"); \n" +
-                "       window.location.reload(); \n }" +
-                "       else {console.log(\"error: \" + response);}})" +
-                "    }\n" +
-                "</script>";
         page += "</html>";
 
         return page;

@@ -43,18 +43,35 @@ public class VotoServlet extends HttpServlet {
 //  SALVAR VOTO
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("doPost: new voto");
-
         HttpSession session=request.getSession();
+        String id = request.getParameter("id");
         String candidatoID = request.getParameter("candidato");
-        Candidato _candidato = candidatos.stream().filter(can -> can.getId().equals(candidatoID)).findFirst().orElse(null);
+        if (candidatoID.isEmpty()) response.sendRedirect("candidatos");
 
-        if (Objects.isNull(_candidato)) response.sendRedirect("candidatos");
+        try {
+            if (Objects.nonNull(session.getAttribute("votos"))){
+                votos = (List<Voto>)session.getAttribute("votos");
+            }
 
-        Voto voto = new Voto(UUID.randomUUID().toString(), _candidato);
-        votos.add(voto);
-        session.setAttribute("votos", votos);
+            Candidato _candidato = candidatos.stream().filter(can -> can.getId().equals(candidatoID)).findFirst().orElse(null);
+            if (Objects.isNull(_candidato)) response.sendRedirect("candidatos");
 
-        response.sendRedirect(request.getRequestURI());
+            if (Objects.isNull(id) || id.isEmpty()) {
+                System.out.println("doPost: new Voto");
+                Voto voto = new Voto(UUID.randomUUID().toString(), _candidato);
+                votos.add(voto);
+            }else{
+                System.out.println("doPost: "+ id);
+                for(Voto voto : votos){
+                    if (voto.getId().equals(id)){
+                        voto.setCandidato(_candidato);
+                    }
+                }
+            }
+            session.setAttribute("votos", votos);
+        }catch (Exception e){
+            response.sendRedirect("voto-error.html");
+        }
+        response.sendRedirect("voto-success.html");
     }
 }

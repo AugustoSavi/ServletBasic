@@ -38,7 +38,7 @@ public class VotosHTMLCreator {
                     "<td>" + voto.getCandidato().getNome() + "</td>" +
                     "<td>" + voto.getCandidato().getNumeroCandidato() + "</td>" +
                     "<td><a href=voto-edit?id="+ voto.getId() +" class=\"fas fa-pencil-alt\"></a></td>" +
-                    "<td><a onclick=_delete(\""+ voto.getCandidato().getId() +"\") class=\"fas fa-trash-alt\"></a></td>" +
+                    "<td><a href=voto-remove?id="+ voto.getId() +" class=\"fas fa-trash-alt\"></a></td>" +
                     "</tr>" ;
         }
         page += dados;
@@ -51,23 +51,6 @@ public class VotosHTMLCreator {
         page += "</table>";
         page += "</div>";
         page += "</body>";
-        page +="<script>\n" +
-                "function _delete(id){\n" +
-                "         console.log(id); \n" +
-                "        var HEADERS = new Headers();\n" +
-                "        HEADERS.append('id', id);\n" +
-                "        var CONFIG = { method: 'GET',\n" +
-                "            headers: HEADERS,\n" +
-                "            mode: 'cors'};\n" +
-                "\n" +
-                "        fetch('voto-remove?'+ new URLSearchParams({id}),CONFIG)" +
-                "       .then(function(response) {" +
-                "       if (response.ok) {" +
-                "       console.log(\"request ok\"); \n" +
-                "       window.location.reload(); \n }" +
-                "       else {console.log(\"error: \" + response);}})" +
-                "    }\n" +
-                "</script>";
         page += "</html>";
 
         return page;

@@ -24,12 +24,11 @@ public class VotoHTMLCreator {
                 "                <div class=\"card-body p-4 p-sm-5\">\n" +
                 "                    <form action=\"voto\" method=\"POST\">\n" +
                 "                        <div class=\"form-floating mb-3\">\n" +
-                "                            <input type=\"text\" class=\"form-control\" "+ formatId(voto.getId())+" id=\"floatingid\" disabled name=\"id\" placeholder=\"id\">\n" +
+                "                            <input type=\"text\" class=\"form-control\" "+ formatId(voto.getId())+" id=\"floatingid\" readonly name=\"id\" placeholder=\"id\">\n" +
                 "                            <label for=\"floatingid\">id</label>\n" +
                 "                        </div>\n" +
                 "                        <div class=\"form-floating mb-3\">\n" +
                 "                            <select pattern=\"[^a-zA-Z0-9]\" class=\"form-control\" name=\"candidato\" id=\"floatingCandidato\">\n" +
-                "                                <option value=\"\">Selecione o Candidato</option>\n" +
                                                     generateOption(candidatos) +
                 "                            </select>\n" +
                 "                            <label for=\"floatingCandidato\">Candidato</label>\n" +
@@ -38,7 +37,7 @@ public class VotoHTMLCreator {
                 "                            <button class=\"btn btn-primary btn-login text-uppercase fw-bold\"\n" +
                 "                                    type=\"submit\">Votar\n" +
                 "                            </button>\n" +
-                "                            <a href=\"index.html\" class=\"btn btn-secondary btn-login text-uppercase fw-bold mt-10\"\n" +
+                "                            <a href=\"index.html\" class=\"btn btn-secondary btn-login text-uppercase fw-bold mt-5\"\n" +
                 "                                    type=\"submit\">Home\n" +
                 "                            </a>\n" +
                 "                        </div>\n" +

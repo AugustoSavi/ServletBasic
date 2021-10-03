@@ -20,9 +20,8 @@
 ## Árvore do projeto
 
 <div align="center">
-<img src="https://user-images.githubusercontent.com/32443720/135740831-b29762e3-3a92-4868-8254-d32e6a12d6cf.png" />
+<img src=".github/assets/tree.jpeg" />
 </div>
-
 
 ## Telas do projeto 
 <div align="center">
@@ -31,3 +30,30 @@
 <div align="center">
 <img src=".github/assets/1.png" />
 </div>
+<div align="center">
+
+<h2>Candidatos</h2>
+</div>
+<div align="center">
+<img src=".github/assets/2.png" />
+<img src=".github/assets/3.png" />
+<img src=".github/assets/4.png" />
+</div>
+
+<h2>Votar</h2>
+<div align="center">
+<img src=".github/assets/5.png" />
+<img src=".github/assets/6.png" />
+<img src=".github/assets/7.png" />
+</div>
+
+<h2>Lista de votos</h2>
+<div align="center">
+<img src=".github/assets/8.png" />
+</div>
+
+<h2>Relatório</h2>
+<div align="center">
+<img src=".github/assets/9.png" />
+</div>
+

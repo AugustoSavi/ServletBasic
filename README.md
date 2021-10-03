@@ -22,3 +22,12 @@
 <div align="center">
 <img src="https://user-images.githubusercontent.com/32443720/135740831-b29762e3-3a92-4868-8254-d32e6a12d6cf.png" />
 </div>
+
+
+## Telas do projeto 
+<div align="center">
+<h2>Home</h2>
+</div>
+<div align="center">
+<img src=".github/assets/1.png" />
+</div>

@@ -28,8 +28,8 @@ public class VotoHTMLCreator {
                 "                            <label for=\"floatingid\">id</label>\n" +
                 "                        </div>\n" +
                 "                        <div class=\"form-floating mb-3\">\n" +
-                "                            <select pattern=\"[^a-zA-Z0-9]\" class=\"form-control\" name=\"candidato\" id=\"floatingCandidato\">\n" +
-                "                                   <option>Selecione o candidato</option>"+
+                "                            <select pattern=\"[^a-zA-Z0-9]\" class=\"form-control\" name=\"candidato\" id=\"floatingCandidato\" required >\n" +
+                "                                   <option value=\"\">Selecione o candidato</option>"+
                                                     generateOption(voto,candidatos) +
                 "                            </select>\n" +
                 "                            <label for=\"floatingCandidato\">Candidato</label>\n" +

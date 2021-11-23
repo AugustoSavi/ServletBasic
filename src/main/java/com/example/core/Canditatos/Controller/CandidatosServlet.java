@@ -1,16 +1,14 @@
-package com.example.core.Servlet.candidatosServlet;
+package com.example.core.Canditatos.Controller;
 
-import com.example.core.Model.Candidato;
-import com.example.core.View.CandidatosViews.CandidatosHTMLCreator;
-
+import com.example.core.Canditatos.Model.Candidato;
+import com.example.core.Canditatos.Repository.CandidatoRepository;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -19,56 +17,47 @@ import java.util.UUID;
 
 @WebServlet(value = "/candidatos")
 public class CandidatosServlet extends HttpServlet {
-    private CandidatosHTMLCreator candidatosHTMLCreator = new CandidatosHTMLCreator();
     private List<Candidato> candidatos = new ArrayList<>();
+
+    private CandidatoRepository candidatoRepository = new CandidatoRepository();
 
     // LISTAGEM CANDIDATOS
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        PrintWriter out = response.getWriter();
+        this.candidatos = candidatoRepository.findAll();
 
-        if (session.isNew()) {
-            out.println(candidatosHTMLCreator.getTableHtml(candidatos));
-        }
-        else {
-            List<Candidato> candidatosSession = (List<Candidato>) session.getAttribute("candidatos");
-            this.candidatos = Objects.isNull(candidatosSession) ? this.candidatos : candidatosSession;
-            out.println(candidatosHTMLCreator.getTableHtml(this.candidatos));
-        }
+        request.setAttribute("candidatos", this.candidatos);
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("candidatos.jsp");
+        requestDispatcher.forward(request,response);
     }
 
     // SALVAR CANDIDATO
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session=request.getSession();
         String id = request.getParameter("id");
         String nome = request.getParameter("nome");
         String numero = request.getParameter("numero");
 
-        if (validaDuplicado(nome,numero, response)){
+        if (validaDuplicado(nome,numero)){
             response.sendRedirect("candidato-duplicado.html");
         }else {
             if (Objects.isNull(id) || id.length() == 0) {
                 System.out.println("doPost: new candidato");
                 Candidato candidato = new Candidato(UUID.randomUUID().toString(), nome, Integer.valueOf(numero));
-                candidatos.add(candidato);
-                session.setAttribute("candidatos", candidatos);
+                candidatoRepository.save(candidato);
             } else {
-                System.out.println("doPost: " + id);
-                for (Candidato candidato : candidatos) {
-                    if (candidato.getId().equals(id)) {
-                        candidato.setNome(nome);
-                        candidato.setNumeroCandidato(Integer.valueOf(numero));
-                    }
-                }
+                System.out.println("doPost: update: " + id);
+                Candidato candidato = candidatoRepository.findOne(id).orElse(new Candidato());
+                candidato.setNome(nome);
+                candidato.setNumeroCandidato(Integer.valueOf(numero));
+                candidatoRepository.save(candidato);
             }
             response.sendRedirect(request.getRequestURI());
         }
     }
 
-    private boolean validaDuplicado(String nome, String numero, HttpServletResponse response){
-        for (Candidato candidato: candidatos){
+    private boolean validaDuplicado(String nome, String numero){
+        for (Candidato candidato: this.candidatos){
             if (candidato.getNome().equals(nome) && candidato.getNumeroCandidato().equals(Integer.valueOf(numero))){
                 return true;
             }

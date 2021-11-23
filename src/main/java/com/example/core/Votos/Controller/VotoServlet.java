@@ -1,17 +1,16 @@
-package com.example.core.Servlet.votosServlet;
+package com.example.core.Votos.Controller;
 
-import com.example.core.Model.Candidato;
-import com.example.core.Model.Voto;
-import com.example.core.View.VotosViews.VotoHTMLCreator;
-
+import com.example.core.Canditatos.Model.Candidato;
+import com.example.core.Votos.Model.Voto;
+import com.example.core.Canditatos.Repository.CandidatoRepository;
+import com.example.core.Votos.Repository.VotoRepository;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -20,55 +19,45 @@ import java.util.UUID;
 @WebServlet( value = "/voto")
 public class VotoServlet extends HttpServlet {
 
-    private List<Voto> votos = new ArrayList<>();
     private List<Candidato> candidatos = new ArrayList<>();
-    private VotoHTMLCreator votoHTMLCreator = new VotoHTMLCreator();
+    private CandidatoRepository candidatoRepository = new CandidatoRepository();
+    private VotoRepository votoRepository = new VotoRepository();
 
 //  PAGE VOTACAO
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.out.println("doGet: voto");
-
-        HttpSession session = request.getSession();
-        PrintWriter out = response.getWriter();
-
-        List<Candidato> candidatosSession = (List<Candidato>) session.getAttribute("candidatos");
-        this.candidatos = Objects.isNull(candidatosSession) ? this.candidatos : candidatosSession;
-
-        if(candidatos.isEmpty()) response.sendRedirect("sem-candidatos.html");
-
-        out.println(votoHTMLCreator.getPageHtml(new Voto(),candidatos));
+        this.candidatos = candidatoRepository.findAll();
+        if(candidatos.isEmpty()){
+            response.sendRedirect("sem-candidatos.html");
+        }
+        else {
+            request.setAttribute("candidatos", this.candidatos);
+            request.setAttribute("voto", new Voto());
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher("voto.jsp");
+            requestDispatcher.forward(request, response);
+        }
     }
 
 //  SALVAR VOTO
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session=request.getSession();
         String id = request.getParameter("id");
         String candidatoID = request.getParameter("candidato");
         if (candidatoID.isEmpty()) response.sendRedirect("candidatos");
-
         try {
-            if (Objects.nonNull(session.getAttribute("votos"))){
-                votos = (List<Voto>)session.getAttribute("votos");
-            }
-
-            Candidato _candidato = candidatos.stream().filter(can -> can.getId().equals(candidatoID)).findFirst().orElse(null);
+            Candidato _candidato = candidatoRepository.findOne(candidatoID).orElse(null);
             if (Objects.isNull(_candidato)) response.sendRedirect("candidatos");
-
             if (Objects.isNull(id) || id.isEmpty()) {
                 System.out.println("doPost: new Voto");
                 Voto voto = new Voto(UUID.randomUUID().toString(), _candidato);
-                votos.add(voto);
+                votoRepository.save(voto);
             }else{
-                System.out.println("doPost: "+ id);
-                for(Voto voto : votos){
-                    if (voto.getId().equals(id)){
-                        voto.setCandidato(_candidato);
-                    }
-                }
+                System.out.println("doPost: update: "+ id);
+                Voto voto = votoRepository.findOne(id).orElse(new Voto());
+                voto.setCandidato(_candidato);
+                votoRepository.save(voto);
             }
-            session.setAttribute("votos", votos);
         }catch (Exception e){
             response.sendRedirect("voto-error.html");
         }

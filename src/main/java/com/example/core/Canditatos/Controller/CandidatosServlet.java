@@ -27,7 +27,7 @@ public class CandidatosServlet extends HttpServlet {
         this.candidatos = candidatoRepository.findAll();
 
         request.setAttribute("candidatos", this.candidatos);
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("candidatos.jsp");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("candidatos/candidatos.jsp");
         requestDispatcher.forward(request,response);
     }
 
@@ -38,15 +38,15 @@ public class CandidatosServlet extends HttpServlet {
         String nome = request.getParameter("nome");
         String numero = request.getParameter("numero");
 
-        if (validaDuplicado(nome,numero)){
-            response.sendRedirect("candidato-duplicado.html");
+        if (validaDuplicado(id, nome, numero)){
+            response.sendRedirect("candidatos/candidato-duplicado.html");
         }else {
             if (Objects.isNull(id) || id.length() == 0) {
                 System.out.println("doPost: new candidato");
                 Candidato candidato = new Candidato(UUID.randomUUID().toString(), nome, Integer.valueOf(numero));
                 candidatoRepository.save(candidato);
             } else {
-                System.out.println("doPost: update: " + id);
+                System.out.println("doPost: candidato update: " + id);
                 Candidato candidato = candidatoRepository.findOne(id).orElse(new Candidato());
                 candidato.setNome(nome);
                 candidato.setNumeroCandidato(Integer.valueOf(numero));
@@ -56,9 +56,9 @@ public class CandidatosServlet extends HttpServlet {
         }
     }
 
-    private boolean validaDuplicado(String nome, String numero){
+    private boolean validaDuplicado(String id, String nome, String numero){
         for (Candidato candidato: this.candidatos){
-            if (candidato.getNome().equals(nome) && candidato.getNumeroCandidato().equals(Integer.valueOf(numero))){
+            if (candidato.getNome().equals(nome) && candidato.getNumeroCandidato().equals(Integer.valueOf(numero)) && !candidato.getId().equals(id)){
                 return true;
             }
         }

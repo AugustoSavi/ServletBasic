@@ -29,7 +29,7 @@ public class VotoServlet extends HttpServlet {
         System.out.println("doGet: voto");
         this.candidatos = candidatoRepository.findAll();
         if(candidatos.isEmpty()){
-            response.sendRedirect("sem-candidatos.html");
+            response.sendRedirect("candidatos/sem-candidatos.html");
         }
         else {
             request.setAttribute("candidatos", this.candidatos);

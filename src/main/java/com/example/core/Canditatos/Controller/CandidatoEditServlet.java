@@ -23,7 +23,7 @@ public class CandidatoEditServlet extends HttpServlet {
         Candidato candidato = candidatoRepository.findOne(id).orElse(new Candidato());
 
         request.setAttribute("candidato", candidato);
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("candidato.jsp");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("candidatos/candidato.jsp");
         requestDispatcher.forward(request,response);
     }
 }

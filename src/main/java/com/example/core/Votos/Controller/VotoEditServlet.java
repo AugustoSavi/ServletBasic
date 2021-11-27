@@ -29,7 +29,7 @@ public class VotoEditServlet extends HttpServlet {
 
         request.setAttribute("candidatos", candidatos);
         request.setAttribute("voto", voto);
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("voto.jsp");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("votos/voto.jsp");
         requestDispatcher.forward(request,response);
     }
 }

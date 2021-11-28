@@ -43,7 +43,7 @@ public class CandidatosServlet extends HttpServlet {
         if (validaDuplicado(id, nome, numero)){
             response.sendRedirect("candidatos/candidato-duplicado.html");
         }else {
-            if (Objects.isNull(id)) {
+            if (utils.isZero(id)) {
                 System.out.println("doPost: new candidato");
                 Candidato candidato = new Candidato(nome, Integer.valueOf(numero));
                 candidatoRepository.save(candidato);

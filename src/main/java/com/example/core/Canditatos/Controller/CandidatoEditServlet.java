@@ -20,7 +20,7 @@ public class CandidatoEditServlet extends HttpServlet {
     // EDIT CANDIDATO
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Long id = utils.getId(String.valueOf(request.getParameter("id")));
+        Long id = utils.getId(request.getParameter("id"));
 
         Candidato candidato = candidatoRepository.findOne(id).orElse(new Candidato());
 

@@ -1,6 +1,7 @@
 package com.example.core.Votos.Controller;
 
 import com.example.core.Canditatos.Model.Candidato;
+import com.example.core.Utils.Utils;
 import com.example.core.Votos.Model.Voto;
 import com.example.core.Canditatos.Repository.CandidatoRepository;
 import com.example.core.Votos.Repository.VotoRepository;
@@ -18,11 +19,12 @@ public class VotoEditServlet extends HttpServlet {
 
     private VotoRepository votoRepository = new VotoRepository();
     private CandidatoRepository candidatoRepository = new CandidatoRepository();
+    private Utils utils = new Utils();
 
     // EDIT VOTO
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String id = String.valueOf(request.getParameter("id"));
+        Long id = utils.getId(request.getParameter("id"));
 
         List<Candidato> candidatos = candidatoRepository.findAll();
         Voto voto = votoRepository.findOne(id).orElse(new Voto());

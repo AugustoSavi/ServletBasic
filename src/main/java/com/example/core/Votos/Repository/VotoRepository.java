@@ -28,7 +28,7 @@ public class VotoRepository {
         }
     }
 
-    public void remove(String id) {
+    public void remove(Long id) {
         try {
             Voto voto = findOne(id).orElse(null);
             entityManager.getTransaction().begin();
@@ -40,7 +40,7 @@ public class VotoRepository {
         }
     }
 
-    public Optional<Voto> findOne(String id){
+    public Optional<Voto> findOne(Long id){
         Voto voto = new Voto();
         try {
             voto = entityManager.find(Voto.class, id);

@@ -1,5 +1,6 @@
 package com.example.core.Votos.Controller;
 
+import com.example.core.Utils.Utils;
 import com.example.core.Votos.Repository.VotoRepository;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,13 +14,14 @@ import java.util.Objects;
 public class VotoRemoveServlet extends HttpServlet {
 
     private VotoRepository votoRepository = new VotoRepository();
+    private Utils utils = new Utils();
 
     // DELETE CANDIDATO
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String id = String.valueOf(request.getParameter("id"));
+        Long id = utils.getId(request.getParameter("id"));
         System.out.println("Delete: "+ id);
-        if (Objects.isNull(id)) response.sendRedirect("/votos");
+        if (utils.isZero(id)) response.sendRedirect("/votos");
         votoRepository.remove(id);
         response.sendRedirect(request.getContextPath() + "/votos");
     }

@@ -10,24 +10,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
-
 @WebServlet(value = "/mesarios")
 public class MesariosServlet extends HttpServlet {
-    private List<Mesario> mesarios = new ArrayList<>();
 
     private MesarioRepository mesarioRepository = new MesarioRepository();
 
     // LISTAGEM MESARIOS
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        this.mesarios = mesarioRepository.findAll();
+        List<Mesario> mesarios = mesarioRepository.findAll();
 
-        request.setAttribute("mesarios", this.mesarios);
+        request.setAttribute("mesarios", mesarios);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("mesarios/mesarios.jsp");
         requestDispatcher.forward(request,response);
     }
@@ -60,7 +57,8 @@ public class MesariosServlet extends HttpServlet {
     }
 
     private boolean validaDuplicado(String id, String cpf){
-        for (Mesario mesario: this.mesarios){
+        List<Mesario> mesarios = mesarioRepository.findAll();
+        for (Mesario mesario: mesarios){
             if (mesario.getCpf().equals(cpf) && !mesario.getId().equals(id)){
                 return true;
             }

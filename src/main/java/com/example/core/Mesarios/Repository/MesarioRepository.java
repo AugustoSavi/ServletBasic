@@ -1,7 +1,6 @@
 package com.example.core.Mesarios.Repository;
 
 import com.example.core.Mesarios.Model.Mesario;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -23,7 +22,6 @@ public class MesarioRepository {
             entityManager.getTransaction().begin();
             entityManager.persist(mesario);
             entityManager.getTransaction().commit();
-            entityManager.getTransaction();
         }catch (Exception e){
             System.out.println(e);
         }

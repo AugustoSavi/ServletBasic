@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Getter
@@ -17,9 +18,15 @@ import javax.persistence.Id;
 public class Candidato {
 
     @Id
-    private String id;
+    @GeneratedValue
+    private Long id;
     @Column
     private String nome;
     @Column
     private Integer numeroCandidato;
+
+    public Candidato(String nome, Integer numeroCandidato){
+        this.nome = nome;
+        this.numeroCandidato = numeroCandidato;
+    }
 }

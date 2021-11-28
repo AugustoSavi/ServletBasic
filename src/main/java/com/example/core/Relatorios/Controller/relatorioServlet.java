@@ -1,6 +1,8 @@
 package com.example.core.Relatorios.Controller;
 
 import com.example.core.Canditatos.Model.Candidato;
+import com.example.core.Mesarios.Model.Mesario;
+import com.example.core.Mesarios.Repository.MesarioRepository;
 import com.example.core.Votos.Model.Voto;
 import com.example.core.Canditatos.Repository.CandidatoRepository;
 import com.example.core.Votos.Repository.VotoRepository;
@@ -17,8 +19,11 @@ import java.util.List;
 @WebServlet( value = "/relatorios")
 public class relatorioServlet extends HttpServlet {
 
+    private List<Mesario> mesarios = new ArrayList<>();
     private List<Voto> votos = new ArrayList<>();
     private List<Candidato> candidatos = new ArrayList<>();
+
+    private MesarioRepository mesarioRepository = new MesarioRepository();
     private VotoRepository votoRepository = new VotoRepository();
     private CandidatoRepository candidatoRepository = new CandidatoRepository();
 
@@ -27,12 +32,14 @@ public class relatorioServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.out.println("doGet: relatorios");
 
+        this.mesarios = mesarioRepository.findAll();
         this.votos = votoRepository.findAll();
         this.candidatos = candidatoRepository.findAll();
 
+        request.setAttribute("mesarios", this.mesarios);
         request.setAttribute("candidatos", this.candidatos);
         request.setAttribute("votos", this.votos);
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("relatorio.jsp");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("relatorios/relatorio.jsp");
         requestDispatcher.forward(request,response);
     }
 }

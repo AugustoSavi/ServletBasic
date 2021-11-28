@@ -1,6 +1,7 @@
 <%@ page import="com.example.core.Canditatos.Model.Candidato" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.example.core.Votos.Model.Voto" %>
+<%@ page import="com.example.core.Mesarios.Model.Mesario" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 
@@ -18,6 +19,39 @@
 </div>
 
 <div id="table-dados" class="mt-3">
+
+  <h2 class="mx-auto" style="width: 200px;">
+    Mesários
+  </h2>
+  <table class="table">
+    <thead>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">Nome</th>
+      <th scope="col">Cpf</th>
+      <th scope="col">Numero telefone</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <% List<Mesario> mesarios = (List<Mesario>) request.getAttribute("mesarios");
+      for (Mesario mesario : mesarios) { %>
+    <tr>
+      <td>  <%= mesario.getId() %></td>
+      <td>  <%= mesario.getNome() %></td>
+      <td>  <%= mesario.getCpf() %> </td>
+      <td>  <%= mesario.getNumeroTelefone() %> </td>
+    </tr>
+    <% } %>
+
+    </tbody>
+    <tfoot>
+    <tr>
+      <td>Total registros:${ mesarios.size() }</td>
+    </tr>
+    </tfoot>
+  </table>
+
   <h2 class="mx-auto" style="width: 200px;">
     Candidatos
   </h2>

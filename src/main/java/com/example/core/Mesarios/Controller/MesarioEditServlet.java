@@ -21,9 +21,9 @@ public class MesarioEditServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String id = String.valueOf(request.getParameter("id"));
 
-        Mesario candidato = candidatoRepository.findOne(id).orElse(new Mesario());
+        Mesario mesario = candidatoRepository.findOne(id).orElse(new Mesario());
 
-        request.setAttribute("mesario", candidato);
+        request.setAttribute("mesario", mesario);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("mesarios/mesario.jsp");
         requestDispatcher.forward(request,response);
     }

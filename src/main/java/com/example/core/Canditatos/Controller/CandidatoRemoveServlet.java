@@ -17,7 +17,7 @@ public class CandidatoRemoveServlet extends HttpServlet {
     // DELETE CANDIDATO
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String id = String.valueOf(request.getParameter("id"));
+        Long id = Long.valueOf(request.getParameter("id"));
         System.out.println("Delete: "+ id);
 
         if (Objects.isNull(id)) response.sendRedirect("/candidatos");

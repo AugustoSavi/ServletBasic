@@ -1,5 +1,6 @@
 package com.example.core.Canditatos.Controller;
 
+import com.example.core.Utils.Utils;
 import com.example.core.Canditatos.Model.Candidato;
 import com.example.core.Canditatos.Repository.CandidatoRepository;
 import javax.servlet.RequestDispatcher;
@@ -14,11 +15,12 @@ import java.io.IOException;
 public class CandidatoEditServlet extends HttpServlet {
 
     private CandidatoRepository candidatoRepository = new CandidatoRepository();
+    private Utils utils = new Utils();
 
     // EDIT CANDIDATO
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String id = String.valueOf(request.getParameter("id"));
+        Long id = utils.getId(String.valueOf(request.getParameter("id")));
 
         Candidato candidato = candidatoRepository.findOne(id).orElse(new Candidato());
 

@@ -27,7 +27,7 @@ public class MesarioRepository {
         }
     }
 
-    public void remove(String id) {
+    public void remove(Long id) {
         try {
             Mesario mesario = findOne(id).orElse(null);
             entityManager.getTransaction().begin();
@@ -39,7 +39,7 @@ public class MesarioRepository {
         }
     }
 
-    public Optional<Mesario> findOne(String id){
+    public Optional<Mesario> findOne(Long id){
         Mesario mesario = new Mesario();
         try {
             mesario = entityManager.find(Mesario.class, id);

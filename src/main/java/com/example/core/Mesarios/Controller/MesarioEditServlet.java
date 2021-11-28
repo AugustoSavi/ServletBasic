@@ -2,6 +2,7 @@ package com.example.core.Mesarios.Controller;
 
 import com.example.core.Mesarios.Model.Mesario;
 import com.example.core.Mesarios.Repository.MesarioRepository;
+import com.example.core.Utils.Utils;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,11 +16,12 @@ import java.io.IOException;
 public class MesarioEditServlet extends HttpServlet {
 
     private MesarioRepository candidatoRepository = new MesarioRepository();
+    private Utils utils = new Utils();
 
     // EDIT CANDIDATO
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String id = String.valueOf(request.getParameter("id"));
+        Long id = utils.getId(request.getParameter("id"));
 
         Mesario mesario = candidatoRepository.findOne(id).orElse(new Mesario());
 

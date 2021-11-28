@@ -4,9 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Getter
@@ -17,11 +17,18 @@ import javax.persistence.Id;
 public class Mesario {
 
     @Id
-    private String id;
+    @GeneratedValue
+    private Long id;
     @Column
     private String nome;
     @Column
     private String cpf;
     @Column
     private String numeroTelefone;
+
+    public Mesario(String nome, String cpf, String numeroTelefone) {
+        this.nome = nome;
+        this.cpf = cpf;
+        this.numeroTelefone = numeroTelefone;
+    }
 }

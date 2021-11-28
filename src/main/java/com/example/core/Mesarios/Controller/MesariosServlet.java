@@ -2,6 +2,7 @@ package com.example.core.Mesarios.Controller;
 
 import com.example.core.Mesarios.Model.Mesario;
 import com.example.core.Mesarios.Repository.MesarioRepository;
+import com.example.core.Utils.Utils;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,13 +12,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
 
 @WebServlet(value = "/mesarios")
 public class MesariosServlet extends HttpServlet {
 
     private MesarioRepository mesarioRepository = new MesarioRepository();
+    private Utils utils = new Utils();
 
     // LISTAGEM MESARIOS
     @Override
@@ -32,7 +32,7 @@ public class MesariosServlet extends HttpServlet {
     // SALVAR MESARIO
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String id = request.getParameter("id");
+        Long id = utils.getId(request.getParameter("id"));
         String nome = request.getParameter("nome");
         String cpf = request.getParameter("cpf");
         String numeroTelefone = request.getParameter("numeroTelefone");
@@ -40,9 +40,9 @@ public class MesariosServlet extends HttpServlet {
         if (validaDuplicado(id,cpf)){
             response.sendRedirect("mesarios/mesario-duplicado.html");
         }else {
-            if (Objects.isNull(id) || id.length() == 0) {
+            if (utils.isZero(id)) {
                 System.out.println("doPost: new mesario");
-                Mesario candidato = new Mesario(UUID.randomUUID().toString(), nome, cpf, numeroTelefone);
+                Mesario candidato = new Mesario( nome, cpf, numeroTelefone);
                 mesarioRepository.save(candidato);
             } else {
                 System.out.println("doPost mesario: update: " + id);
@@ -56,7 +56,7 @@ public class MesariosServlet extends HttpServlet {
         }
     }
 
-    private boolean validaDuplicado(String id, String cpf){
+    private boolean validaDuplicado(Long id, String cpf){
         List<Mesario> mesarios = mesarioRepository.findAll();
         for (Mesario mesario: mesarios){
             if (mesario.getCpf().equals(cpf) && !mesario.getId().equals(id)){

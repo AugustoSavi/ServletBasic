@@ -20,7 +20,7 @@
 ## Árvore do projeto
 
 <div align="center">
-<img src=".github/assets/tree.jpeg" />
+<img src=".github/assets/tree.png" />
 </div>
 
 ## Telas do projeto 
@@ -30,8 +30,16 @@
 <div align="center">
 <img src=".github/assets/1.png" />
 </div>
-<div align="center">
 
+<div align="center">
+<h2>Mesários</h2>
+</div>
+<div align="center">
+<img src=".github/assets/10.png" />
+<img src=".github/assets/11.png" />
+</div>
+
+<div align="center">
 <h2>Candidatos</h2>
 </div>
 <div align="center">
